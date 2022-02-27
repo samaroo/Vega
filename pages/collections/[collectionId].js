@@ -6,7 +6,10 @@ import { useWeb3 } from '@3rdweb/hooks'
 import { ThirdwebSDK } from "@3rdweb/sdk";
 import { client } from '../../lib/sanityClient'
 import Header from '../../components/Header'
-import { BsArrowDownCircleFill } from 'react-icons/bs'
+import { BsArrowDownCircleFill, BsPersonCircle } from 'react-icons/bs'
+import { AiOutlineDollarCircle } from 'react-icons/ai'
+import { BiArrowFromBottom } from 'react-icons/bi'
+import { FaEthereum } from 'react-icons/fa'
 
 const style = {
     defaultWrapper: `w-screen h-screen bg-cover bg-[url("../assets/greySwirl.jpg")] grid place-items-center`,
@@ -18,7 +21,21 @@ const style = {
     profileImage: 'w-[200px] h-[200px] shadow rounded-full border-solid border-4 border-white',
     collectionTitle: 'text-black text-6xl pb-[300] font-custom font-bold',
     chevronContainer: `text-6xl font-bold`,
-    scrollUp: 'text-white text-6xl pb-[300] font-custom font-bold'
+    aboutContainer: 'flex flex-row justify-between items-center h-3/4 w-3/4',
+    aboutLeftConatiner: `flex flex-col justify-between items-center w-full p-6 h-full`,
+    aboutRightConatiner: `flex flex-col justify-between items-center w-full p-6 h-full`,
+    creatorPanel: `bg-white w-full m-4 h-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-row justify-start items-center`,
+    floorPricePanel: `bg-white w-full m-4 h-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-row justify-start items-center`,
+    volumeTradedPanel: `bg-white w-full m-4 h-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-row justify-start items-center`,
+    aboutPanel: `bg-white basis-3/4 m-4 w-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-row justify-start items-center`,
+    titlePanel: `bg-white basis-1/4 m-4 w-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-row justify-start items-center`,
+    circle: `origin-center absolute top-[50%] -left-[90px] w-[200px] h-[200px] -translate-y-[50%] rounded-full bg-black `,
+    iconInCircle: `text-white text-5xl z-10 w-[100px] grid place-items-center`,
+    circleCardBodyContainer: `text-black flex flex-col justify-start items-center grow w-full h-full`,
+    circleCardTitle: `text-black text-xl mt-2 mb-6 font-normal`,
+    circleCardMainContentContainer: `text-5xl flex flex-row justify-start items-center`,
+    creatorCardMainContentContainer: `text-4xl flex flex-row justify-start items-center`,
+    ethIcon: `text-4xl`
 }
 
 const Collection = () => {
@@ -165,9 +182,72 @@ const Collection = () => {
                         )}
                     })}
                 </ParallaxLayer>
-                <ParallaxLayer offset={1} speed={0.25} style={style.parallax2Backgorund}>
-                    <div className={style.scrollUp}>
-                        Scroll Up
+                <ParallaxLayer offset={1} speed={0.1} style={style.parallax2Backgorund}>
+                    <div className={style.aboutContainer}>
+                        <div className={style.aboutLeftConatiner}>
+                            <div className={style.titlePanel}>
+                                Title
+                            </div>
+                            <div className={style.aboutPanel}>
+                                About
+                            </div>
+                        </div>
+                        <div className={style.aboutRightConatiner}>
+                            <div className={style.creatorPanel}>
+                                <div className={style.circle}/>
+                                <div className={style.iconInCircle}>
+                                    <BsPersonCircle/>
+                                </div>
+                                <div className={style.circleCardBodyContainer}>
+                                    <div className={style.circleCardTitle}>
+                                        Creator
+                                    </div>
+                                    <div className={style.creatorCardMainContentContainer}>
+                                        <div>
+                                            {collection?.creator} 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={style.floorPricePanel}>
+                                <div className={style.circle}/>
+                                <div className={style.iconInCircle}>
+                                    <BiArrowFromBottom/>
+                                </div>
+                                <div className={style.circleCardBodyContainer}>
+                                    <div className={style.circleCardTitle}>
+                                        Floor Price
+                                    </div>
+                                    <div className={style.circleCardMainContentContainer}>
+                                        <div>
+                                            {collection?.floorPrice} 
+                                        </div>
+                                        <div className={style.ethIcon}>
+                                            <FaEthereum/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={style.volumeTradedPanel}>
+                                <div className={style.circle}/>
+                                <div className={style.iconInCircle}>
+                                    <AiOutlineDollarCircle/>
+                                </div>
+                                <div className={style.circleCardBodyContainer}>
+                                    <div className={style.circleCardTitle}>
+                                        Volume Traded
+                                    </div>
+                                    <div className={style.circleCardMainContentContainer}>
+                                        <div>
+                                            {collection?.volumeTraded} 
+                                        </div>
+                                        <div className={style.ethIcon}>
+                                            <FaEthereum/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </ParallaxLayer>
             </Parallax>
