@@ -5,6 +5,7 @@ import { useTransition, useSpring, animated, config } from 'react-spring'
 import { useWeb3 } from '@3rdweb/hooks'
 import { client } from '../lib/sanityClient'
 import toast, { Toaster } from 'react-hot-toast'
+import Link from 'next/Link'
 
 const style = {
     wrapper: `w-screen h-screen bg-[url("../assets/blackWave.png")] bg-cover grid place-items-center`,
@@ -130,9 +131,11 @@ const Hero = () => {
                                 Browse the wide variety of NFT collections available on Vega wether you are looking for inspiration or to purchase a piece for yourself!
                             </div>
                             <div className={style.panel1Button}>
-                                <Button variant="contained" size="large" style={{backgroundColor: '#1c1c1c'}}>
-                                    Let's Explore
-                                </Button>
+                                <Link href='/collections/0xD22D5669f7547f92447358e2bE2f119a120ee442'>
+                                    <Button variant="contained" size="large" style={{backgroundColor: '#1c1c1c'}}>
+                                        Let's Explore
+                                    </Button>
+                                </Link>
                             </div>
                         </animated.div>
                     )}

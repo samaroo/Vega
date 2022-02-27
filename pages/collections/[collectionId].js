@@ -1,21 +1,24 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react'
 import { Parallax, ParallaxLayer } from '@react-spring/parallax'
-import { useTransition, useSpring, animated, config } from 'react-spring'
+import { useTransition, useSpring, animated, config, useSpringRef, useChain, easings } from 'react-spring'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
-import Image from 'next/image'
 import { useWeb3 } from '@3rdweb/hooks'
 import { ThirdwebSDK } from "@3rdweb/sdk";
 import { client } from '../../lib/sanityClient'
 import Header from '../../components/Header'
-import image from '../../assets/background.jpeg'
+import { BsArrowDownCircleFill } from 'react-icons/bs'
 
 const style = {
-    wrapper: `w-screen h-screen bg-cover bg-[url("../assets/greyPolkaDot.jpeg")] grid place-items-center`,
+    defaultWrapper: `w-screen h-screen bg-cover bg-[url("../assets/greySwirl.jpg")] grid place-items-center`,
     parallax1Background: { backgroundColor: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'black', fontSize: '3rem', fontWeight: 'bold' },
     parallax2Backgorund: { backgroundColor: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', fontSize: '3rem', fontWeight: 'bold' },
-    profileImageParallexLayer: {display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none'},
-    profileImage: 'w-[200px] h-[200px]'
+    profileImageParallexLayer: { display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none' },
+    collectionTitleParallexLayer: { textAlign: 'center', background: 'none' },
+    chevronParallexLayer: { display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none' },
+    profileImage: 'w-[200px] h-[200px] shadow rounded-full border-solid border-4 border-white',
+    collectionTitle: 'text-black text-6xl pb-[300] font-custom font-bold',
+    chevronContainer: `text-6xl font-bold`,
+    scrollUp: 'text-white text-6xl pb-[300] font-custom font-bold'
 }
 
 const Collection = () => {
@@ -105,20 +108,67 @@ const Collection = () => {
         config: config.slow
     })
 
+    //when title loads in, transition it into page
+    const transitionTitle = useTransition(collection?.title, {
+        from: {x: 0, y: 200, opacity: 0},
+        enter: {x: 0, y: 0, opacity: 1, delay: 300},
+        config: config.slow
+    })
+
+    //when data loads in, transition the chevrons in
+    const transitionChevronContainer = useTransition(collection?.title, {
+        from: { x: 0, y: 200, opacity: 0 },
+        enter: { x: 0, y: 0, opacity: 1, delay: 500 },
+        config: config.slow
+    })
+
+    const chevron1Animation = useSpring({
+        loop: { reverse: true },
+        config: { duration: 1200, easing: easings.easeInOutQuint },
+        from: { opacity: 0.2, y: 0 },
+        to: { opacity: 1, y: 5 }
+    })
+
+    const wrapperGenerator = () => {
+        return collection?.bannerImageUrl ? collection.bannerImageUrl : style.defaultWrapper
+    }
+
     return (
-        <div className={style.wrapper}>
+        <div className={style.defaultWrapper}>
             <Header/>
             <Parallax pages={2} ref={ref}>
                 <ParallaxLayer offset={0} speed={1} style={style.parallax1Background}/>
                 <ParallaxLayer offset={0} speed={0.25} style={style.profileImageParallexLayer}>
                     {transitionProfilePicutre((styles, item) => {
                         if (item) { return (
-                            <animated.img style={styles} className={style.profileImage} src={collection?.profileImageUrl ? collection.profileImageUrl : '/loading.png'} />
+                            <animated.img style={styles} className={style.profileImage} src={collection?.profileImageUrl} alt='Profile Picture'/>
                         )}
                     })}
                 </ParallaxLayer>
-                <ParallaxLayer offset={1} speed={1} style={style.parallax2Backgorund}>
-                    Scroll Up
+                <ParallaxLayer offset={-0.01} speed={0.25} style={style.profileImageParallexLayer}>
+                    {transitionTitle((styles, item) => {
+                        if (item) { return (
+                            <animated.div style={styles} className={style.collectionTitle}>
+                                {collection?.title}
+                            </animated.div>
+                        )}
+                    })}
+                </ParallaxLayer>
+                <ParallaxLayer offset={0.3} speed={0.25} style={style.chevronParallexLayer}>
+                    {transitionChevronContainer((styles, item) => {
+                        if (item) { return (
+                            <animated.div style={styles} className={style.chevronContainer} onClick={()=>ref.current.scrollTo(1)}>
+                                <animated.div style={chevron1Animation}>
+                                    <BsArrowDownCircleFill/>
+                                </animated.div>
+                            </animated.div>
+                        )}
+                    })}
+                </ParallaxLayer>
+                <ParallaxLayer offset={1} speed={0.25} style={style.parallax2Backgorund}>
+                    <div className={style.scrollUp}>
+                        Scroll Up
+                    </div>
                 </ParallaxLayer>
             </Parallax>
         </div>
