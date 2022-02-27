@@ -6,7 +6,7 @@ import { useWeb3 } from '@3rdweb/hooks'
 import { ThirdwebSDK } from "@3rdweb/sdk";
 import { client } from '../../lib/sanityClient'
 import Header from '../../components/Header'
-import { BsArrowDownCircleFill, BsPersonCircle } from 'react-icons/bs'
+import { BsArrowDownCircleFill, BsPersonCircle, BsInfoCircle } from 'react-icons/bs'
 import { AiOutlineDollarCircle } from 'react-icons/ai'
 import { BiArrowFromBottom } from 'react-icons/bi'
 import { FaEthereum } from 'react-icons/fa'
@@ -18,7 +18,7 @@ const style = {
     profileImageParallexLayer: { display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none' },
     collectionTitleParallexLayer: { textAlign: 'center', background: 'none' },
     chevronParallexLayer: { display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none' },
-    profileImage: 'w-[200px] h-[200px] shadow rounded-full border-solid border-4 border-white',
+    profileImage: 'w-[200px] h-[200px] shadow-dark rounded-full border-solid border-4 border-white',
     collectionTitle: 'text-black text-6xl pb-[300] font-custom font-bold',
     chevronContainer: `text-6xl font-bold`,
     aboutContainer: 'flex flex-row justify-between items-center h-3/4 w-3/4',
@@ -27,15 +27,21 @@ const style = {
     creatorPanel: `bg-white w-full m-4 h-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-row justify-start items-center`,
     floorPricePanel: `bg-white w-full m-4 h-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-row justify-start items-center`,
     volumeTradedPanel: `bg-white w-full m-4 h-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-row justify-start items-center`,
-    aboutPanel: `bg-white basis-3/4 m-4 w-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-row justify-start items-center`,
-    titlePanel: `bg-white basis-1/4 m-4 w-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-row justify-start items-center`,
-    circle: `origin-center absolute top-[50%] -left-[90px] w-[200px] h-[200px] -translate-y-[50%] rounded-full bg-black `,
+    aboutPanel: `bg-white basis-3/4 m-4 w-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-col justify-start items-center`,
+    titlePanel: `bg-white basis-1/4 m-4 p-2 w-full rounded-2xl overflow-hidden relative border-4 border-white flex flex-row justify-start items-center`,
+    circle: `origin-center absolute top-[50%] -left-[90px] w-[200px] h-[200px] -translate-y-[50%] rounded-full bg-black shadow-dark`,
+    aboutPanelCircle: `origin-center absolute -top-[70px] -left-[70px] w-[200px] h-[200px] rounded-full bg-black shadow-dark`,
     iconInCircle: `text-white text-5xl z-10 w-[100px] grid place-items-center`,
     circleCardBodyContainer: `text-black flex flex-col justify-start items-center grow w-full h-full`,
     circleCardTitle: `text-black text-xl mt-2 mb-6 font-normal`,
     circleCardMainContentContainer: `text-5xl flex flex-row justify-start items-center`,
     creatorCardMainContentContainer: `text-4xl flex flex-row justify-start items-center`,
-    ethIcon: `text-4xl`
+    ethIcon: `text-4xl`,
+    titlePanelImageContainer: `basis-1/4 p-2 grid place-items-center`,
+    titlePanelMainContentContainer: `basis-3/4 p-2 grid place-items-center text-black text-3xl`,
+    aboutPanelIcon: `absolute top-[30px] left-[30px] text-5xl text-white z-10`,
+    aboutPanelTitle: `h-[130px] w-full grid place-items-center text-3xl text-black mb-4 font-normal`,
+    aboutPanelMainContent: `grow text-4xl text-black p-10 text-center`
 }
 
 const Collection = () => {
@@ -141,7 +147,7 @@ const Collection = () => {
 
     const chevron1Animation = useSpring({
         loop: { reverse: true },
-        config: { duration: 1200, easing: easings.easeInOutQuint },
+        config: { duration: 1000, easing: easings.easeInOutQuint },
         from: { opacity: 0.2, y: 0 },
         to: { opacity: 1, y: 5 }
     })
@@ -186,10 +192,24 @@ const Collection = () => {
                     <div className={style.aboutContainer}>
                         <div className={style.aboutLeftConatiner}>
                             <div className={style.titlePanel}>
-                                Title
+                                <div className={style.titlePanelImageContainer}>
+                                    <img src={collection?.profileImageUrl} alt='Profile Image'/>
+                                </div>
+                                <div className={style.titlePanelMainContentContainer}>
+                                    Bored Ape Yacht Club
+                                </div>
                             </div>
                             <div className={style.aboutPanel}>
-                                About
+                                <div className={style.aboutPanelCircle}/>
+                                <div className={style.aboutPanelIcon}>
+                                    <BsInfoCircle/>
+                                </div>
+                                <div className={style.aboutPanelTitle}>
+                                    Description
+                                </div>
+                                <div className={style.aboutPanelMainContent}>
+                                    {collection?.description}
+                                </div>
                             </div>
                         </div>
                         <div className={style.aboutRightConatiner}>

@@ -10,12 +10,12 @@ import { MdOutlineAccountBalanceWallet } from 'react-icons/md'
 const style = {
     wrapper: `bg-white w-screen px-[1.2rem] py-[0.8rem] flex absolute top-0 left-0 z-10`,
     logoContainer: `flex items-center cursor-pointer`,
-    logoText: `ml-[0.8rem] text-black font-thin text-4xl`,
+    logoText: `ml-[0.8rem] text-black font-logo font-thin text-4xl`,
     searchBar: `flex flex-1 mx-[2rem] w-max-[520px] items-center bg-[#ebebeb] rounded-[0.8rem] hover:bg-[#d4d4d4]`,
     searchIcon: `text-[#8a939b] mx-3 font-bold text-lg`,
     searchInput: `h-[2.6rem] w-full border-0 bg-transparent outline-0 ring-0 px-2 pl-0 text-[#363636] placeholder:text-[#8a939b]`,
     headerItems: `flex items-center justify-end`,
-    headerItem: `text-black px-4 font-semibold text-[#292929] hover:text-[#636363] cursor-pointer`,
+    headerItem: `text-black px-4 font-extrabold text-[#292929] hover:text-[#636363] cursor-pointer`,
     headerIcon: `text-[#292929] text-3xl font-thin px-4 hover:text-[#636363] cursor-pointer`,
 }
 
